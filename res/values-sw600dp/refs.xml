@@ -1,0 +1,3 @@
+<resources>
+    <item type="layout" name="activity_statistica_list">@layout/activity_statistica_twopane</item>
+</resources>

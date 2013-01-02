@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <link rel="shortcut icon" type="images/icon" href="/static/img/favicon.ico">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!--    <meta http-equiv="refresh" content="70">-->
+    <title>Andamento ricariche</title>
+    <script type="text/javascript" src="./jquery-1.6.4.jsf"></script>
+    <script type="text/javascript" src="./highstock.jsf"></script>
+    <script type="text/javascript">
+
+    $(function() {
+
+ 		var obj = window.dataLoader;
+		var jdata = $.parseJSON(obj.getData());
+        var seriesOptions = [];
+        var chart;
+
+        Highcharts.setOptions({
+            global: {
+	            useUTC: false,
+            },
+            lang: {
+                rangeSelectorZoom: 'Range: '
+            }
+        });
+        
+        var options = {
+             chart: {
+                    renderTo: 'container',
+                    load: function() {
+                           document.getElementById('container').style.background = 'none';
+                    }
+                },
+		        title: {
+				    text: 'Andamento delle ricariche'
+			    },
+                credits : {
+                  href : 'mailto:marco.taschin@guest.telecomitalia.it',
+                  text : 'Powered By Ced Padova OPSC Dev Team - MT',
+                  style : {
+                    color : '#898989'
+                  }
+                },
+            legend: {
+                layout: 'horizontal',
+                y: -60,
+                style: {
+                    position: 'absolute',
+                    left: 'auto',
+                    right: 'auto',
+                    bottom: 'auto',
+                    top: 'auto'
+                },
+               enabled: 'true'
+            },
+		        rangeSelector: {
+		        	buttonTheme: {
+                       width: 80,
+                       height: 20,
+                    },
+		            buttons: [{
+		                type: 'hour',
+		                count: 3,
+		                text: '3h'
+		            }, {
+		                type: 'hour',
+		                count: 6,
+		                text: '6h'
+		            }, {
+		                type: 'hour',
+		                count: 9,
+		                text: '9h'
+		            }, {
+		                type: 'hour',
+		                count: 12,
+		                text: '12h'
+		            }, {
+		                type: 'hour',
+		                count: 15,
+		                text: '15h'
+		            }, {
+		                type: 'hour',
+		                count: 18,
+		                text: '18h'
+		            }, {
+		                type: 'hour',
+		                count: 21,
+		                text: '21h'
+		            }, {
+                        type: 'day',
+		                count: 1,
+		                text: '24h'
+		            }],
+		            selected: 0,
+                    inputEnabled: false
+		        },
+                navigator: {
+                    enabled: false
+                },
+                scrollbar: {
+                    enabled: false
+                },
+			    yAxis: {
+				    title: {
+					    text: 'Numero di ricariche'
+				    },
+                    min: 0,
+			        startOnTick: false,
+			        showFirstLabel: false
+			    },
+                tooltip: {
+                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> <br>'
+                },
+                series: seriesOptions
+        };
+
+		/*
+		 * Parse del JSON.
+		 */
+		a = {};
+        ctipo_ric = '';
+		
+		$(jdata).each(function(i,val){
+		    $.each(val,function(k,v){
+		    
+	           if(k != ctipo_ric){
+	               a[k] = [];
+	           }
+	           ctipo_ric = k;
+	           //console.log(k);
+	           for(var s in v){
+	           	//console.log(s);
+                a[k].push([v[s]["stat_time"],v[s]["stat_value"]]);
+                //console.log(k+" : "+ v[s]["stat_time"]+" --> "+v[s]["stat_value"]);
+               }
+			});
+		});
+
+        for(var s in a){
+            //console.log(s + ' --> ' + a[s]);
+            seriesOptions.push({name: s, data: a[s]});
+            //console.log(seriesOptions[seriesOptions.length-1]);
+        }
+
+		/*
+		$.each(items, function(itemNo, item) {
+                        if (itemNo === 0) {
+                            data.name = item;
+                        } else {
+                            data.y = parseFloat(item);
+                        }
+                    }
+		*/
+
+
+		//
+		// DEBUG
+		//
+		//console.log(options);
+		chart = new Highcharts.StockChart(options);
+		
+        //console.log('END seriesOptions');
+        //console.log(seriesOptions);
+        
+        
+    });
+        
+    </script>
+</head>
+<body>
+    <!-- 3. Add the container -->
+    <!-- <p id="mytext">Hello!</p> -->
+    <div id="container" style="width: 100%; height: 520px; margin: 0 auto; 
+    background-repeat:no-repeat; background-position:center; background-attachment:fixed; 
+    background-image: url(spinner.gif)"></div>
+</body>
+</html>

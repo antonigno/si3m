@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Si3m</string>
+    <string name="title_statistica_detail">Statistica Detail</string>
+    <string name="title_statistica_list">Si3m</string>
+    <string name="report_attivita">Report attività GA</string>
+    <string name="stat_time">DATA E ORA:</string>
+    <string name="date_separator">-</string>
+    <string name="area">AREA:</string>
+    <string name="system">SISTEMA:</string>
+    <string name="description">DESCRIZIONE ATTIVITA\':</string>
+    <string name="message">MESSAGGIO:</string>
+    <string name="timestamp">Timestamp:</string>
+    <string name="stat_extra">Stat Extra:</string>
+    <string name="grafico">Grafico ricariche</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_splash">Si3m</string>
+
+</resources>

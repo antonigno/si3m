@@ -1,0 +1,396 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Andamento ricariche npress</title>
+
+    <!-- 1. Add these JavaScript inclusions in the head of your page -->
+    <script type="text/javascript" src="./jquery-1.6.4.jsf"></script>
+    <script type="text/javascript" src="./highcharts.jsf"></script>
+
+    <!-- 1a) Optional: the exporting module -->
+    <!-- <script type="text/javascript" src="/static/js/modules/exporting.js"></script> -->
+
+    <!-- 2. Add the JavaScript to initialize the chart on document ready -->
+    <script type="text/javascript">
+        var chart; // global.
+	    var cDate = new Date();
+	    var nightModeHourOn = 17; // Night mode On hour.
+	    var nightModeHourOff = 8; // Night mode Off hour.
+ 	    var nightMode = false;
+	    var txtTitle = 'Andamento ricariche';
+
+	    if(cDate.getHours() > nightModeHourOn | cDate.getHours() < nightModeHourOff){
+		    nightMode = true;
+		    txtTitle = 'Andamento ricariche - Night mode version';
+	    }
+
+        var aNumero_richieste = "Numero_richieste"; var aPercentuale_richieste_evase = "Percentuale_richieste_evase"; var aNumero_ricariche = "Numero_ricariche"; 
+        var dNumero_richieste = [[1355733540000, 159], [1355733660000, 173], [1355733780000, 204], [1355733900000, 158], [1355734020000, 152], [1355734140000, 167], [1355734260000, 162], [1355734380000, 128], [1355734500000, 170], [1355734620000, 170], [1355734740000, 160], [1355734860000, 169], [1355734980000, 158], [1355735100000, 168], [1355735220000, 184], [1355735340000, 165], [1355735460000, 161], [1355735580000, 193], [1355735700000, 166], [1355735820000, 202], [1355735940000, 190], [1355736060000, 177], [1355736180000, 174], [1355736300000, 192], [1355736420000, 192], [1355736540000, 186], [1355736660000, 204], [1355736780000, 175], [1355736900000, 172], [1355737020000, 180], [1355737140000, 180], [1355737260000, 184], [1355737380000, 188], [1355737500000, 187], [1355737620000, 172], [1355737740000, 183], [1355737860000, 180], [1355737980000, 171], [1355738100000, 195], [1355738220000, 168], [1355738340000, 175], [1355738460000, 192], [1355738580000, 194], [1355738700000, 202], [1355738820000, 204], [1355738940000, 195], [1355739060000, 198], [1355739180000, 197], [1355739300000, 193], [1355739420000, 168], [1355739540000, 201], [1355739660000, 179], [1355739780000, 170], [1355739900000, 168], [1355740020000, 167], [1355740140000, 182], [1355740260000, 198], [1355740380000, 180], [1355740500000, 215], [1355740620000, 159], [1355740740000, 197], [1355740860000, 175], [1355740980000, 186], [1355741100000, 176], [1355741220000, 199], [1355741340000, 190], [1355741460000, 177], [1355741580000, 202], [1355741700000, 211], [1355741820000, 186], [1355741940000, 191], [1355742060000, 181], [1355742180000, 193], [1355742300000, 201], [1355742420000, 206], [1355742540000, 200], [1355742660000, 199], [1355742780000, 200], [1355742900000, 184], [1355743020000, 180], [1355743140000, 208], [1355743260000, 209], [1355743380000, 229], [1355743500000, 222], [1355743620000, 193], [1355743740000, 196], [1355743860000, 193], [1355743980000, 218], [1355744100000, 209], [1355744220000, 181]]; var dPercentuale_richieste_evase = [[1355733540000, 94], [1355733660000, 97], [1355733780000, 98], [1355733900000, 94], [1355734020000, 96], [1355734140000, 94], [1355734260000, 94], [1355734380000, 93], [1355734500000, 95], [1355734620000, 95], [1355734740000, 93], [1355734860000, 97], [1355734980000, 93], [1355735100000, 93], [1355735220000, 96], [1355735340000, 96], [1355735460000, 96], [1355735580000, 95], [1355735700000, 93], [1355735820000, 97], [1355735940000, 92], [1355736060000, 95], [1355736180000, 97], [1355736300000, 95], [1355736420000, 95], [1355736540000, 95], [1355736660000, 96], [1355736780000, 95], [1355736900000, 98], [1355737020000, 96], [1355737140000, 95], [1355737260000, 93], [1355737380000, 95], [1355737500000, 96], [1355737620000, 95], [1355737740000, 95], [1355737860000, 94], [1355737980000, 92], [1355738100000, 95], [1355738220000, 96], [1355738340000, 96], [1355738460000, 96], [1355738580000, 93], [1355738700000, 94], [1355738820000, 92], [1355738940000, 94], [1355739060000, 95], [1355739180000, 97], [1355739300000, 93], [1355739420000, 93], [1355739540000, 93], [1355739660000, 96], [1355739780000, 93], [1355739900000, 95], [1355740020000, 93], [1355740140000, 95], [1355740260000, 96], [1355740380000, 94], [1355740500000, 97], [1355740620000, 97], [1355740740000, 95], [1355740860000, 98], [1355740980000, 94], [1355741100000, 94], [1355741220000, 94], [1355741340000, 96], [1355741460000, 94], [1355741580000, 95], [1355741700000, 96], [1355741820000, 98], [1355741940000, 96], [1355742060000, 96], [1355742180000, 94], [1355742300000, 96], [1355742420000, 96], [1355742540000, 96], [1355742660000, 96], [1355742780000, 96], [1355742900000, 96], [1355743020000, 96], [1355743140000, 97], [1355743260000, 95], [1355743380000, 91], [1355743500000, 95], [1355743620000, 96], [1355743740000, 93], [1355743860000, 94], [1355743980000, 97], [1355744100000, 95], [1355744220000, 96]]; var dNumero_ricariche = [[1355733540000, 149], [1355733660000, 168], [1355733780000, 199], [1355733900000, 149], [1355734020000, 146], [1355734140000, 157], [1355734260000, 152], [1355734380000, 119], [1355734500000, 162], [1355734620000, 161], [1355734740000, 148], [1355734860000, 164], [1355734980000, 147], [1355735100000, 156], [1355735220000, 176], [1355735340000, 159], [1355735460000, 154], [1355735580000, 183], [1355735700000, 155], [1355735820000, 195], [1355735940000, 175], [1355736060000, 168], [1355736180000, 168], [1355736300000, 183], [1355736420000, 182], [1355736540000, 177], [1355736660000, 196], [1355736780000, 166], [1355736900000, 168], [1355737020000, 172], [1355737140000, 171], [1355737260000, 172], [1355737380000, 179], [1355737500000, 180], [1355737620000, 163], [1355737740000, 173], [1355737860000, 169], [1355737980000, 158], [1355738100000, 186], [1355738220000, 162], [1355738340000, 168], [1355738460000, 185], [1355738580000, 181], [1355738700000, 190], [1355738820000, 187], [1355738940000, 183], [1355739060000, 189], [1355739180000, 192], [1355739300000, 179], [1355739420000, 156], [1355739540000, 186], [1355739660000, 172], [1355739780000, 158], [1355739900000, 160], [1355740020000, 156], [1355740140000, 172], [1355740260000, 191], [1355740380000, 170], [1355740500000, 208], [1355740620000, 155], [1355740740000, 188], [1355740860000, 171], [1355740980000, 175], [1355741100000, 165], [1355741220000, 187], [1355741340000, 183], [1355741460000, 166], [1355741580000, 192], [1355741700000, 203], [1355741820000, 183], [1355741940000, 183], [1355742060000, 174], [1355742180000, 181], [1355742300000, 193], [1355742420000, 198], [1355742540000, 191], [1355742660000, 192], [1355742780000, 192], [1355742900000, 176], [1355743020000, 172], [1355743140000, 202], [1355743260000, 199], [1355743380000, 208], [1355743500000, 211], [1355743620000, 186], [1355743740000, 182], [1355743860000, 181], [1355743980000, 212], [1355744100000, 198], [1355744220000, 174]]; 
+
+        var chartOptions = {
+            chart: {
+                renderTo: 'container',
+                defaultSeriesType: 'line',
+            },
+            exporting: { enabled: false },
+            title: {
+                text: txtTitle
+            },
+            credits : {
+              href : 'mailto:marco.taschin@guest.telecomitalia.it',
+              text : 'Powered By Ced Padova OPSC Dev Team - MT',
+              style : {
+                color : '#898989'
+              }
+            },
+			plotOptions: {
+				line: {
+					marker: {
+						enabled: false
+					}
+				}
+			},
+            xAxis: {
+                type: 'datetime',
+                startOnTick: true,
+                maxZoom: 60 * 1000
+            },
+            yAxis: {
+                title: {
+                    text: 'Numero di ricariche per tipologia',
+                    margin: 70
+                },
+                labels: {
+                    style: {
+                        fontWeight: 'bold',
+                        fontSize: '14px'
+                    }
+                },
+                gridLineWidth: 1,
+                min: 0,
+			    startOnTick: false,
+			    showFirstLabel: false
+            },
+            legend: {
+                layout: 'horizontal',
+                style: {
+                    left: 'auto',
+                    bottom: 'auto',
+                    top: 'auto'
+                }
+            },        
+            series: []
+        };
+
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+
+        $(document).ready(function(){
+            chart = new Highcharts.Chart(chartOptions);
+            chart.addSeries({ name: 'Numero_richieste',color: '', data: dNumero_richieste, lineWidth: 1, pointInterval: 60 * 60 * 1000});chart.addSeries({ name: 'Percentuale_richieste_evase',color: '', data: dPercentuale_richieste_evase, lineWidth: 1, pointInterval: 60 * 60 * 1000});chart.addSeries({ name: 'Numero_ricariche',color: '', data: dNumero_ricariche, lineWidth: 1, pointInterval: 60 * 60 * 1000});
+        });
+
+
+    /**
+     * Dark blue theme for Highcharts JS
+     * @author Torstein Hønsi
+     */
+
+    Highcharts.theme = {
+       colors: ["#DDDF0D", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
+          "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+       chart: {
+          backgroundColor: {
+             linearGradient: [0, 0, 250, 500],
+             stops: [
+                [0, 'rgb(48, 48, 96)'],
+                [1, 'rgb(0, 0, 0)']
+             ]
+          },
+          borderColor: '#000000',
+          borderWidth: 2,
+          className: 'dark-container',
+          plotBackgroundColor: 'rgba(255, 255, 255, .1)',
+          plotBorderColor: '#CCCCCC',
+          plotBorderWidth: 1
+       },
+       title: {
+          style: {
+             color: '#C0C0C0',
+             font: 'bold 16px "Trebuchet MS", Verdana, sans-serif'
+          }
+       },
+       subtitle: {
+          style: {
+             color: '#666666',
+             font: 'bold 12px "Trebuchet MS", Verdana, sans-serif'
+          }
+       },
+       xAxis: {
+          gridLineColor: '#333333',
+          gridLineWidth: 1,
+          labels: {
+             style: {
+                color: '#A0A0A0'
+             }
+          },
+          lineColor: '#A0A0A0',
+          tickColor: '#A0A0A0',
+          title: {
+             style: {
+                color: '#CCC',
+                fontWeight: 'bold',
+                fontSize: '12px',
+                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+
+             }
+          }
+       },
+       yAxis: {
+          gridLineColor: '#333333',
+          labels: {
+             style: {
+                color: '#A0A0A0'
+             }
+          },
+          lineColor: '#A0A0A0',
+          minorTickInterval: null,
+          tickColor: '#A0A0A0',
+          tickWidth: 1,
+          title: {
+             style: {
+                color: '#CCC',
+                fontWeight: 'bold',
+                fontSize: '12px',
+                fontFamily: 'Trebuchet MS, Verdana, sans-serif'
+             }
+          }
+       },
+       tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          style: {
+             color: '#F0F0F0'
+          }
+       },
+       toolbar: {
+          itemStyle: {
+             color: 'silver'
+          }
+       },
+       plotOptions: {
+          line: {
+             dataLabels: {
+                color: '#CCC'
+             },
+             marker: {
+                lineColor: '#333'
+             }
+          },
+          spline: {
+             marker: {
+                lineColor: '#333'
+             }
+          },
+          scatter: {
+             marker: {
+                lineColor: '#333'
+             }
+          },
+          candlestick: {
+             lineColor: 'white'
+          }
+       },
+       legend: {
+          itemStyle: {
+             font: '9pt Trebuchet MS, Verdana, sans-serif',
+             color: '#A0A0A0'
+          },
+          itemHoverStyle: {
+             color: '#FFF'
+          },
+          itemHiddenStyle: {
+             color: '#444'
+          }
+       },
+       credits: {
+          style: {
+             color: '#666'
+          }
+       },
+       labels: {
+          style: {
+             color: '#CCC'
+          }
+       },
+
+       navigation: {
+          buttonOptions: {
+             backgroundColor: {
+                linearGradient: [0, 0, 0, 20],
+                stops: [
+                   [0.4, '#606060'],
+                   [0.6, '#333333']
+                ]
+             },
+             borderColor: '#000000',
+             symbolStroke: '#C0C0C0',
+             hoverSymbolStroke: '#FFFFFF'
+          }
+       },
+
+       exporting: {
+          buttons: {
+             exportButton: {
+                symbolFill: '#55BE3B'
+             },
+             printButton: {
+                symbolFill: '#7797BE'
+             }
+          }
+       },
+
+       // scroll charts
+       rangeSelector: {
+          buttonTheme: {
+             fill: {
+                linearGradient: [0, 0, 0, 20],
+                stops: [
+                   [0.4, '#888'],
+                   [0.6, '#555']
+                ]
+             },
+             stroke: '#000000',
+             style: {
+                color: '#CCC',
+                fontWeight: 'bold'
+             },
+             states: {
+                hover: {
+                   fill: {
+                      linearGradient: [0, 0, 0, 20],
+                      stops: [
+                         [0.4, '#BBB'],
+                         [0.6, '#888']
+                      ]
+                   },
+                   stroke: '#000000',
+                   style: {
+                      color: 'white'
+                   }
+                },
+                select: {
+                   fill: {
+                      linearGradient: [0, 0, 0, 20],
+                      stops: [
+                         [0.1, '#000'],
+                         [0.3, '#333']
+                      ]
+                   },
+                   stroke: '#000000',
+                   style: {
+                      color: 'yellow'
+                   }
+                }
+             }
+          },
+          inputStyle: {
+             backgroundColor: '#333',
+             color: 'silver'
+          },
+          labelStyle: {
+             color: 'silver'
+          }
+       },
+
+       navigator: {
+          handles: {
+             backgroundColor: '#666',
+             borderColor: '#AAA'
+          },
+          outlineColor: '#CCC',
+          maskFill: 'rgba(16, 16, 16, 0.5)',
+          series: {
+             color: '#7798BF',
+             lineColor: '#A6C7ED'
+          }
+       },
+
+       scrollbar: {
+          barBackgroundColor: {
+                linearGradient: [0, 0, 0, 20],
+                stops: [
+                   [0.4, '#888'],
+                   [0.6, '#555']
+                ]
+             },
+          barBorderColor: '#CCC',
+          buttonArrowColor: '#CCC',
+          buttonBackgroundColor: {
+                linearGradient: [0, 0, 0, 20],
+                stops: [
+                   [0.4, '#888'],
+                   [0.6, '#555']
+                ]
+             },
+          buttonBorderColor: '#CCC',
+          rifleColor: '#FFF',
+          trackBackgroundColor: {
+             linearGradient: [0, 0, 0, 10],
+             stops: [
+                [0, '#000'],
+                [1, '#333']
+             ]
+          },
+          trackBorderColor: '#666'
+       },
+
+       // special colors for some of the
+       legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
+       legendBackgroundColorSolid: 'rgb(35, 35, 70)',
+       dataLabelsColor: '#444',
+       textColor: '#C0C0C0',
+       maskColor: 'rgba(255,255,255,0.3)'
+    };
+
+    // Apply night mode theme.
+    if(nightMode)
+        var highchartsOptions = Highcharts.setOptions(Highcharts.theme);
+
+    </script>
+
+</head>
+<body>
+<!-- start header -->
+<div id="header">
+</div>
+<!-- end header -->
+<!-- start page -->
+<div id="page">
+	<!-- start content -->
+	<div id="content">
+		
+    <!-- 3. Add the container -->
+    <div id="container" style="width: 100%; height: 520px; margin: 0 auto; 
+    background-repeat:no-repeat; background-position:center; background-attachment:fixed; 
+    background-image: url(spinner.gif)"></div>
+    <script> if(nightMode) document.bgColor = "#000000"; </script>
+
+	</div>
+	<!-- end content -->
+	<!-- start sidebar -->
+	<div id="sidebar">
+		
+	</div>
+	<!-- end sidebar -->
+</div>
+<!-- end page -->
+<div id="footer">
+</div>
+</body>
+</html>

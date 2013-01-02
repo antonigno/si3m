@@ -1,0 +1,53 @@
+{
+	"COLUMNS": ["data", "ora", "sistema", "descrizione_attivita", "messaggio"],
+	"AREAS": ["billing", "postsales", "banking"],
+	"FILTERS": ["sistema", "data"],
+	"billing": [
+		{
+			"data": "20121205",
+			"ora": "04:16",
+			"sistema": "gmed",
+			"descrizione_attivita": "ripristino finestra temporale batch",
+			"messaggio": "Attivita' conclusa, le prime verifiche non rilevano anomalie"
+		},
+		{
+			"data": "20121204",
+			"ora": "03:10",
+			"sistema": "rte",
+			"descrizione_attivita": "refresh cre rate per aggiornamento configurazione",
+			"messaggio": "Attivita' conclusa, le prime verifiche non rilevano anomalie"
+		}
+	],
+	"postsales": [
+		{
+			"data": "20121205",
+			"ora": "04:00",
+			"sistema": "ppm",
+			"descrizione_attivita": "refresh per aggiornamento configurazione",
+			"messaggio": "Attivita' conclusa, le prime verifiche non rilevano anomalie"
+		},
+		{
+			"data": "20121204",
+			"ora": "03:10",
+			"sistema": "conair",
+			"descrizione_attivita": "riavvio frontend",
+			"messaggio": "Attivita' conclusa, le prime verifiche non rilevano anomalie"
+		}
+	],
+	"banking": [
+		{
+			"data": "20121205",
+			"ora": "06:00",
+			"sistema": "nbip",
+			"descrizione_attivita": "riavvio server",
+			"messaggio": "Attivita' conclusa, le prime verifiche non rilevano anomalie"
+		},
+		{
+			"data": "20121204",
+			"ora": "03:10",
+			"sistema": "npress",
+			"descrizione_attivita": "refresh componente applicativa",
+			"messaggio": "Attivita' conclusa, le prime verifiche non rilevano anomalie"
+		}
+	]
+}
